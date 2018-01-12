@@ -1,5 +1,5 @@
-#ifndef __OutputService_h__
-#define __OutputService_h__
+#ifndef __HGCTPG_FrontendNtuplizer_OutputService_h__
+#define __HGCTPG_FrontendNtuplizer_OutputService_h__
 
 
 #include <vector>
@@ -7,8 +7,8 @@
 
 #include "TFile.h"
 #include "TTree.h"
-#include "Packer.h"
-#include "SignalParticle.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Packer.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalParticle.h"
 
 
 class OutputService

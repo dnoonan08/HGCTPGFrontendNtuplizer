@@ -1,8 +1,8 @@
 #include <iostream>
 #include <string>
 
-#include "Parameters.h"
-#include "Manager.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Parameters.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Manager.h"
 
 
 int main(int argc, char** argv) 

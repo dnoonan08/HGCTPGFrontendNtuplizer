@@ -1,14 +1,14 @@
-#ifndef __Manager_h__
-#define __Manager_h__
+#ifndef __HGCTPG_FrontendNtuplizer_Manager_h__
+#define __HGCTPG_FrontendNtuplizer_Manager_h__
 
 #include <memory>
 #include "TRandom3.h"
-#include "Packer.h"
-#include "InputService.h"
-#include "OutputService.h"
-#include "Parameters.h"
-#include "Geometry.h"
-#include "ISignalSelection.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Packer.h"
+#include "HGCTPG/FrontendNtuplizer/interface/InputService.h"
+#include "HGCTPG/FrontendNtuplizer/interface/OutputService.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Parameters.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Geometry.h"
+#include "HGCTPG/FrontendNtuplizer/interface/ISignalSelection.h"
 
 class Manager 
 {

@@ -1,7 +1,7 @@
 #include <iostream>
 
 #include "TLorentzVector.h"
-#include "InputService.h"
+#include "HGCTPG/FrontendNtuplizer/interface/InputService.h"
 
 
 InputService::

@@ -1,5 +1,5 @@
-#ifndef __Geometry_h__
-#define __Geometry_h__
+#ifndef __HGCTPG_FrontendNtuplizer_Geometry_h__
+#define __HGCTPG_FrontendNtuplizer_Geometry_h__
 
 #include <unordered_map>
 #include <set>

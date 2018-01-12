@@ -1,5 +1,5 @@
-#ifndef __InputService_h__
-#define __InputService_h__
+#ifndef __HGCTPG_FrontendNtuplizer_InputService_h__
+#define __HGCTPG_FrontendNtuplizer_InputService_h__
 
 
 #include <vector>
@@ -7,9 +7,9 @@
 #include <memory>
 
 #include "TChain.h"
-#include "Event.h"
-#include "SignalParticle.h"
-#include "Geometry.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Event.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalParticle.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Geometry.h"
 
 
 class InputService

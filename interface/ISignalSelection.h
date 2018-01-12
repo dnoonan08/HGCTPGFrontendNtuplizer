@@ -1,9 +1,9 @@
-#ifndef __ISignalSelection_h__
-#define __ISignalSelection_h__
+#ifndef __HGCTPG_FrontendNtuplizer_ISignalSelection_h__
+#define __HGCTPG_FrontendNtuplizer_ISignalSelection_h__
 
 #include <vector>
-#include "SignalParticle.h"
-#include "Parameters.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalParticle.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Parameters.h"
 
 
 class ISignalSelection

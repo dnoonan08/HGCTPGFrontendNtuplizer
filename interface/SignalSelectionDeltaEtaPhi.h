@@ -1,7 +1,7 @@
-#ifndef __SignalSelectionDeltaEtaPhi_h__
-#define __SignalSelectionDeltaEtaPhi_h__
+#ifndef __HGCTPG_FrontendNtuplizer_SignalSelectionDeltaEtaPhi_h__
+#define __HGCTPG_FrontendNtuplizer_SignalSelectionDeltaEtaPhi_h__
 
-#include "ISignalSelection.h"
+#include "HGCTPG/FrontendNtuplizer/interface/ISignalSelection.h"
 
 class SignalSelectionDeltaEtaPhi : public ISignalSelection
 {

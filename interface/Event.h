@@ -1,5 +1,5 @@
-#ifndef __Event_h__
-#define __Event_h__
+#ifndef __HGCTPG_FrontendNtuplizer_Event_h__
+#define __HGCTPG_FrontendNtuplizer_Event_h__
 
 #include <unordered_map>
 #include <set>

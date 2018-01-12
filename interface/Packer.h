@@ -1,13 +1,13 @@
-#ifndef __Packer_h__
-#define __Packer_h__
+#ifndef __HGCTPG_FrontendNtuplizer_Packer_h__
+#define __HGCTPG_FrontendNtuplizer_Packer_h__
 
 #include <array>
 #include <vector>
 #include <unordered_map>
 
-#include "Event.h"
-#include "SignalParticle.h"
-#include "Geometry.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Event.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalParticle.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Geometry.h"
 
 
 

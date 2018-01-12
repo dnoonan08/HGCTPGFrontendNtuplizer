@@ -1,0 +1,3 @@
+<bin file="main.cpp" name="frontend_ntuplizer.exe">
+  <use name="HGCTPG/FrontendNtuplizer"/>
+</bin>

@@ -1,5 +1,5 @@
-#ifndef __SignalParticle_h__
-#define __SignalParticle_h__
+#ifndef __HGCTPG_FrontendNtuplizer_SignalParticle_h__
+#define __HGCTPG_FrontendNtuplizer_SignalParticle_h__
 
 #include <vector>
 #include <memory>

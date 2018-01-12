@@ -1,6 +1,6 @@
 #include <cmath>
 #include "TVector2.h"
-#include "SignalSelectionDeltaEtaPhi.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalSelectionDeltaEtaPhi.h"
 
 
 SignalSelectionDeltaEtaPhi::

@@ -1,6 +1,7 @@
-#ifndef __Parameters_h__
-#define __Parameters_h__
+#ifndef __HGCTPG_FrontendNtuplizer_Parameters_h__
+#define __HGCTPG_FrontendNtuplizer_Parameters_h__
 
+#include <vector>
 #include <map>
 #include <string>
 #include <boost/python.hpp>

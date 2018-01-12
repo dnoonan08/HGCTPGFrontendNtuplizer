@@ -1,7 +1,7 @@
 #include <iostream>
 
-#include "Manager.h"
-#include "SignalSelectionDeltaEtaPhi.h"
+#include "HGCTPG/FrontendNtuplizer/interface/Manager.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalSelectionDeltaEtaPhi.h"
 
 Manager::
 Manager(const Parameters& params):

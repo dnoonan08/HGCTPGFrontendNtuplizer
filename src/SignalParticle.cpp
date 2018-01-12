@@ -1,6 +1,6 @@
 
-#include "SignalParticle.h"
-#include "ISignalSelection.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalParticle.h"
+#include "HGCTPG/FrontendNtuplizer/interface/ISignalSelection.h"
 
 
 SignalParticle::
