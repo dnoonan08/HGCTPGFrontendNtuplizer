@@ -20,7 +20,7 @@ panel_mapping = '/home/llr/cms/sauvan/Projects/L1CalorimeterTrigger_Phase2HGCal/
 
 
 ### Batch config
-from Parameters import Parameters
+from HGCTPG.FrontendNtuplizer.Parameters import Parameters
 parameters = Parameters()
 parameters.working_dir = '/home/llr/cms/sauvan/DATA/HGCAL/ConcentratorNtuples/'
 parameters.events_per_job = 10
