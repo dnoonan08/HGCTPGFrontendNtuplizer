@@ -15,12 +15,13 @@ struct DataFrame
 {
   static const unsigned kbunches = 10;
   static const unsigned kmodules = 6;
-  static const unsigned ktriggercells = 48;
+  static const unsigned ktriggercells = 72;
 
   DataFrame():
     id(0),
     panel(0),
     layer(0),
+    subdet(0),
     modules_n(0),
     events(),
     event_types(),
@@ -30,6 +31,7 @@ struct DataFrame
   uint32_t id;
   unsigned panel;
   unsigned layer;
+  unsigned subdet;
   unsigned modules_n;
   std::array<unsigned, kbunches> events;
   std::array<unsigned, kbunches> event_types;

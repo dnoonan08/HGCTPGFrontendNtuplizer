@@ -1,4 +1,4 @@
-
+#include <iostream>
 #include "HGCTPG/FrontendNtuplizer/interface/SignalParticle.h"
 #include "HGCTPG/FrontendNtuplizer/interface/ISignalSelection.h"
 
@@ -36,5 +36,5 @@ void
 SignalParticle::
 applySelection(const std::unique_ptr<ISignalSelection>& sel)
 {
-  selected_hits_ = sel->selectHits(hits_);
+	selected_hits_ = sel->selectHits(hits_, gen_particle_);
 }

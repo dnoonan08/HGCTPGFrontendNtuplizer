@@ -2,13 +2,14 @@
 
 #include "HGCTPG/FrontendNtuplizer/interface/Manager.h"
 #include "HGCTPG/FrontendNtuplizer/interface/SignalSelectionDeltaEtaPhi.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalSelectionDeltaR.h"
 
 Manager::
 Manager(const Parameters& params):
   params_(params),
-  input_signal_(params.input().signal_files, params.input().tree, false, Event::Type::Signal),
-  input_signal_0pu_(params.input().signal_files_0pu, params.input().tree, true, Event::Type::Signal),
-  input_background_(params.input().background_files, params.input().tree, false, Event::Type::Background),
+  input_signal_(params.input().signal_files, params.input().tree, false, Event::Type::Signal,params.signal().gen_type,params.signal().gen_jet_threshold),
+  input_signal_0pu_(params.input().signal_files_0pu, params.input().tree, true, Event::Type::Signal,params.signal().gen_type,params.signal().gen_jet_threshold),
+  input_background_(params.input().background_files, params.input().tree, false, Event::Type::Background,params.signal().gen_type,params.signal().gen_jet_threshold),
   output_(params.output().output_file),
   geometry_(params.geometry().panel_mapping_file),
   packer_(geometry_),
@@ -17,6 +18,10 @@ Manager(const Parameters& params):
   if(params.signal().hit_selection_type=="DeltaEtaPhi")
   {
     signal_selection_.reset(new SignalSelectionDeltaEtaPhi(params));
+  }
+  if(params.signal().hit_selection_type=="DeltaR")
+  {
+    signal_selection_.reset(new SignalSelectionDeltaR(params));
   }
 }
 

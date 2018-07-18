@@ -12,7 +12,7 @@ export SCRAM_ARCH=slc6_amd64_gcc630
 cmsrel CMSSW_9_4_2
 cd CMSSW_9_4_2/src/
 cmsenv
-git clone https://github.com/jbsauvan/HGCTPGFrontendNtuplizer.git HGCTPG/FrontendNtuplizer
+git clone https://github.com/dnoonan08/HGCTPGFrontendNtuplizer.git HGCTPG/FrontendNtuplizer
 scram b -j4
 ```
 
@@ -27,8 +27,8 @@ The python configuration files are python files containing all the parameters to
 
 There is also a script used to launch the code on a batch system. Currently it is only implemented for the LLR batch system. It can be run as follows.
 ```bash
-# Inside config/
-../batch/launcher.py --cfg=config_file.py
+# From inside batch/
+./launcher_cmslpc.py --cfg=config_file.py
 ```
 The same config file can be used with additional parameters defined in `python/Parameters.py` (the working directory, the total number of events and the number of events per jobs).
 

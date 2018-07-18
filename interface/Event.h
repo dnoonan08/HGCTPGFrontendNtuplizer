@@ -29,6 +29,7 @@ struct Panel
   uint32_t detid;
   int zside;
   int sector;
+  int subdet;
   int layer;
   int number;
 };

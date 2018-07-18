@@ -32,6 +32,7 @@ class OutputService
     unsigned signal_event_;
     unsigned panel_id_;
     unsigned panel_layer_;
+    unsigned panel_subdet_;
     unsigned modules_n_;
     unsigned events_[kbunches];
     unsigned events_type_[kbunches];
@@ -46,6 +47,7 @@ class OutputService
     float gen_phi_;
     float gen_energy_;
     std::vector<uint32_t> hits_panel_;
+    std::vector<uint32_t> hits_subdet_;
     std::vector<uint32_t> hits_tc_;
     std::vector<float> hits_eta_;
     std::vector<float> hits_phi_;

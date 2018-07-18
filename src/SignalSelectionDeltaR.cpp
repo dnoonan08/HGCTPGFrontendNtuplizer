@@ -1,22 +1,22 @@
 #include <cmath>
+#include <iostream>
 #include "TVector2.h"
-#include "HGCTPG/FrontendNtuplizer/interface/SignalSelectionDeltaEtaPhi.h"
+#include "HGCTPG/FrontendNtuplizer/interface/SignalSelectionDeltaR.h"
 
 
-SignalSelectionDeltaEtaPhi::
-SignalSelectionDeltaEtaPhi(const Parameters& pars):
+SignalSelectionDeltaR::
+SignalSelectionDeltaR(const Parameters& pars):
   ISignalSelection(pars)
 {
-  delta_eta_ = pars.signal().hit_selection_parameters.at("delta_eta");
-  delta_phi_ = pars.signal().hit_selection_parameters.at("delta_phi");
+  delta_R_ = pars.signal().hit_selection_parameters.at("delta_R");
 }
 
 std::vector<Hit>
-SignalSelectionDeltaEtaPhi::
+SignalSelectionDeltaR::
 selectHits(const std::vector<Hit>& hits, TLorentzVector gen_particle) const
 {
   std::vector<Hit> selected_hits;
-  // // Compute the vector sum
+  // Compute the vector sum
   // TLorentzVector p4_sum;
   // for(const auto& hit : hits)
   // {
@@ -27,22 +27,12 @@ selectHits(const std::vector<Hit>& hits, TLorentzVector gen_particle) const
   // }
   // Select signal hits with a DeltaEta DeltaPhi cut
   // around the sum direction
-  // for(const auto& hit : hits)
-  // {
-  //   double deta = hit.eta - p4_sum.Eta();
-  //   double dphi = TVector2::Phi_mpi_pi(hit.phi - p4_sum.Phi());
-  //   if(std::abs(deta)<delta_eta_ && std::abs(dphi)<delta_phi_)
-  //   {
-  //     selected_hits.push_back(hit);
-  //   }
-  // }
-  // return selected_hits;
   for(const auto& hit : hits)
   {
     double deta = hit.eta - gen_particle.Eta();
     double dphi = TVector2::Phi_mpi_pi(hit.phi - gen_particle.Phi());
-	if (std::abs(deta)<delta_eta_ && std::abs(dphi)<delta_phi_)
-	{
+	//	std::cout << std::sqrt(deta*deta+dphi*dphi) < delta_R_ << std::endl;
+	if (std::sqrt(deta*deta+dphi*dphi) < delta_R_){
 	  selected_hits.push_back(hit);
 	}
   }

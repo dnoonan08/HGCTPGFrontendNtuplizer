@@ -4,7 +4,7 @@
 #include <vector>
 #include "HGCTPG/FrontendNtuplizer/interface/SignalParticle.h"
 #include "HGCTPG/FrontendNtuplizer/interface/Parameters.h"
-
+#include "TLorentzVector.h"
 
 class ISignalSelection
 {
@@ -13,7 +13,8 @@ class ISignalSelection
     ISignalSelection(const Parameters&) {};
     virtual ~ISignalSelection() {};
 
-    virtual std::vector<Hit> selectHits(const std::vector<Hit>&) const = 0;
+	//    virtual std::vector<Hit> selectHits(const std::vector<Hit>&) const = 0;
+    virtual std::vector<Hit> selectHits(const std::vector<Hit>&, TLorentzVector gen_particle) const = 0;
 };
 
 

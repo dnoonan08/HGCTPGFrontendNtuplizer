@@ -32,6 +32,8 @@ class Parameters
     struct Signal 
     {
       Signal();
+	  std::string gen_type;
+	  float gen_jet_threshold;
       std::string hit_selection_type;
       std::map<std::string,float> hit_selection_parameters;
     };

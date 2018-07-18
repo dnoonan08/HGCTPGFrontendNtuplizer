@@ -1,4 +1,5 @@
 
+#include <iostream>
 #include <fstream>
 #include "HGCTPG/FrontendNtuplizer/interface/Geometry.h"
 
@@ -48,9 +49,15 @@ int
 Geometry::
 getModuleIndex(unsigned module) const
 {
-  const auto& itr = module_index_.find(module);
-  if(itr==module_index_.end()) return -1;
-  return itr->second;
+	//	std::cout << "-----------------" << std::endl;
+	//	std::cout << module << std::endl;
+	const auto& itr = module_index_.find(module);
+	if(itr==module_index_.end()) {
+		// std::cout << "NOTFOUND" << std::endl;
+		return -1;
+	}
+	//	std::cout << itr->second << std::endl;
+	return itr->second;
 }
 
 unsigned

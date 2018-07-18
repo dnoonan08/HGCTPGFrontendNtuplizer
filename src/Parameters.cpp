@@ -93,6 +93,8 @@ void
 Parameters::
 fillSignal(const python::dict& dict)
 {
+  signal_.gen_type = python::extract<std::string>(dict["signal_gen_type"]);
+  signal_.gen_jet_threshold = python::extract<float>(dict["signal_gen_jet_threshold"]);
   signal_.hit_selection_type = python::extract<std::string>(dict["signal_hit_selection_type"]);
   python::dict hit_selection_parameters = python::extract<python::dict>(dict["signal_hit_selection_parameters"]);
   signal_.hit_selection_parameters = toStdMap<std::string,float>(hit_selection_parameters);

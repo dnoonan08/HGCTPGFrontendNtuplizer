@@ -20,6 +20,7 @@ struct Hit
   float phi;
   float pt;
   float simenergy;
+  unsigned subdet;
   unsigned module;
   unsigned third;
   unsigned cell;

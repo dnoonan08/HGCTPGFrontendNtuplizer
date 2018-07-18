@@ -15,7 +15,7 @@
 class InputService
 {
   public:
-    InputService(const std::vector<std::string>&, const std::string&, bool, Event::Type);
+    InputService(const std::vector<std::string>&, const std::string&, bool, Event::Type, std::string, double);
     ~InputService() {};
 
     unsigned events() {return tree_.GetEntries();}
@@ -29,6 +29,8 @@ class InputService
     TChain tree_;
     bool read_signal_;
     Event::Type type_;
+	std::string genType_;
+	double genJetThreshold_;
 
     // tree branches
     unsigned event_;
@@ -40,10 +42,18 @@ class InputService
     std::vector<float> *gen_pt_ = nullptr;
     std::vector<float> *gen_eta_ = nullptr;
     std::vector<float> *gen_phi_ = nullptr;
+
+    // gen jets
+    int genjet_n_;
+    std::vector<float> *genjet_energy_ = nullptr;
+    std::vector<float> *genjet_pt_ = nullptr;
+    std::vector<float> *genjet_eta_ = nullptr;
+    std::vector<float> *genjet_phi_ = nullptr;
+
     // trigger cells
     int tc_n_ ;
     std::vector<uint32_t> *tc_id_ = nullptr;
-    std::vector<uint32_t> *tc_subdet_ = nullptr;
+	std::vector<uint32_t> *tc_subdet_ = nullptr;
     std::vector<float> *tc_eta_ = nullptr;
     std::vector<float> *tc_phi_ = nullptr;
     std::vector<float> *tc_pt_ = nullptr;
@@ -54,6 +64,7 @@ class InputService
     std::vector<uint32_t> *panel_id_ = nullptr;
     std::vector<int> *panel_zside_ = nullptr;
     std::vector<int> *panel_layer_ = nullptr;
+    std::vector<int> *panel_subdet_ = nullptr;
     std::vector<int> *panel_sector_ = nullptr;
     std::vector<int> *panel_number_ = nullptr;
     std::vector<unsigned> *panel_tc_n_ = nullptr;

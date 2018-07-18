@@ -54,7 +54,9 @@ pack(const std::vector<Event>& events, const Event& event_0pu, const std::vector
       frame.id = id_panel.second.detid;
       frame.panel = id_panel.second.number;
       frame.layer = id_panel.second.layer;
+      frame.subdet = id_panel.second.subdet;
       frame.modules_n = geometry_->getPanelSize(id_panel.second.number);
+	  if (frame.subdet==5) frame.modules_n = 1;
       if(frame.modules_n>DataFrame::kmodules)
       {
         throw std::string("More modules in panel than the 6 supported by the dataframe");
@@ -73,7 +75,12 @@ pack(const std::vector<Event>& events, const Event& event_0pu, const std::vector
           // std::cerr<<"New cell "<<cell_id<<"\n";
 
           const TriggerCell& cell = event.getCell(cell_id);
+		  //		  std::cout << frame.subdet << std::endl;
           unsigned cell_module = geometry_->getModuleIndex(cell.module);
+		  //		  std::cout << cell.module << "  "  << cell_module << std::endl;
+		  if (frame.subdet==5){
+			  cell_module=0;
+		  }
           unsigned cell_cell = (cell.cell & TriggerCell::kcell_mask);
           // std::cerr<<"Cell "<<cell.cell<<" -> "<<cell_cell<<"\n";
           cell_cell |= ((cell.third & TriggerCell::kthird_mask) << TriggerCell::kthird_shift);
@@ -85,7 +92,6 @@ pack(const std::vector<Event>& events, const Event& event_0pu, const std::vector
           unsigned frame_pointer = frame_pointer_0 + cell_module*DataFrame::ktriggercells + cell_cell;
           frame.data_mipPt.at(frame_pointer) = cell.mipPt;
           frame.data_pt.at(frame_pointer) = cell.pt;
-          // std::cerr<<frame_pointer<<" = "<<cell.mipPt<<" "<<frame.data_mipPt.at(frame_pointer)<<"\n";
         }
         ievt++;
       }

@@ -1,3 +1,5 @@
+#include <iostream>
+
 #include "TString.h"
 #include "HGCTPG/FrontendNtuplizer/interface/OutputService.h"
 
@@ -10,6 +12,7 @@ OutputService(const std::string& file_name):
   panel_tree_->Branch("signal_event", &signal_event_, "signal_event/i");
   panel_tree_->Branch("panel_id", &panel_id_, "panel_id/i");
   panel_tree_->Branch("panel_layer", &panel_layer_, "panel_layer/i");
+  panel_tree_->Branch("panel_subdet", &panel_subdet_, "panel_subdet/i");
   panel_tree_->Branch("modules_n", &modules_n_, "modules_n/i");
   panel_tree_->Branch("events", &events_[0], TString::Format("events[%i]/i", kbunches));
   panel_tree_->Branch("events_type", &events_type_[0], TString::Format("events_type[%i]/i", kbunches));
@@ -24,6 +27,8 @@ OutputService(const std::string& file_name):
   signal_tree_->Branch("gen_phi", &gen_phi_, "gen_phi/F");
   signal_tree_->Branch("gen_energy", &gen_energy_, "gen_energy/F");
   signal_tree_->Branch("hits_panel", &hits_panel_);
+  signal_tree_->Branch("hits_subdet", &hits_subdet_);
+
   signal_tree_->Branch("hits_tc", &hits_tc_);
   signal_tree_->Branch("hits_eta", &hits_eta_);
   signal_tree_->Branch("hits_phi", &hits_phi_);
@@ -47,6 +52,7 @@ fillDataframe(const DataFrame& dataframe)
   signal_event_ = dataframe.events[0];
   panel_id_ = dataframe.id;
   panel_layer_ = dataframe.layer;
+  panel_subdet_ = dataframe.subdet;
   modules_n_ = dataframe.modules_n;
   for(unsigned ibx=0; ibx<kbunches; ibx++)
   {
@@ -79,6 +85,7 @@ fillSignal(const SignalParticle& particle)
   for(const auto& hit : hits)
   {
     hits_panel_.emplace_back(hit.panelid);
+	//    hits_subdet_.emplace_back(hit.subdet);
     unsigned cell_id = hit.cell + hit.third*cell_per_third + hit.module*cell_per_third*third_per_module;
     hits_tc_.emplace_back(cell_id);
     hits_eta_.emplace_back(hit.eta);
@@ -96,6 +103,7 @@ clearPanel()
   signal_event_ = 0;
   panel_id_ = 0;
   panel_layer_ = 0;
+  panel_subdet_ = 0;
   modules_n_ = 0;
   for(unsigned ibx=0; ibx<kbunches; ibx++)
   {
@@ -121,6 +129,7 @@ clearSignal()
   gen_phi_ = 0.;
   gen_energy_ = 0.;
   hits_panel_.clear();
+  hits_subdet_.clear();
   hits_tc_.clear();
   hits_eta_.clear();
   hits_phi_.clear();

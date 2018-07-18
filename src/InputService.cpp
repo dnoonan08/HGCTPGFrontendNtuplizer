@@ -1,5 +1,6 @@
 #include <iostream>
 
+
 #include "TLorentzVector.h"
 #include "HGCTPG/FrontendNtuplizer/interface/InputService.h"
 
@@ -9,11 +10,15 @@ InputService(
     const std::vector<std::string>& file_list,
     const std::string& tree_name,
     bool read_signal,
-    Event::Type type
+    Event::Type type,
+	std::string genType,
+	double genJetThreshold
     ):
   tree_(tree_name.c_str()),
   read_signal_(read_signal),
-  type_(type)
+  type_(type),
+  genType_(genType),
+  genJetThreshold_(genJetThreshold)
 {
   // tree_.SetDirectory(0);
   for(const auto& f : file_list)
@@ -26,6 +31,7 @@ InputService(
   tree_.SetBranchStatus("panel_id", 1);
   tree_.SetBranchStatus("panel_zside", 1);
   tree_.SetBranchStatus("panel_layer", 1);
+  tree_.SetBranchStatus("panel_subdet", 1);
   tree_.SetBranchStatus("panel_sector", 1);
   tree_.SetBranchStatus("panel_number", 1);
   tree_.SetBranchStatus("panel_tc_n", 1);
@@ -41,6 +47,7 @@ InputService(
   tree_.SetBranchAddress("panel_id", &panel_id_);
   tree_.SetBranchAddress("panel_zside", &panel_zside_);
   tree_.SetBranchAddress("panel_layer", &panel_layer_);
+  tree_.SetBranchAddress("panel_subdet", &panel_subdet_);
   tree_.SetBranchAddress("panel_sector", &panel_sector_);
   tree_.SetBranchAddress("panel_number", &panel_number_);
   tree_.SetBranchAddress("panel_tc_n", &panel_tc_n_);
@@ -68,6 +75,20 @@ InputService(
     tree_.SetBranchAddress("gen_pt", &gen_pt_);
     tree_.SetBranchAddress("gen_eta", &gen_eta_);
     tree_.SetBranchAddress("gen_phi", &gen_phi_);
+
+	if (genType=="genJet"){
+		tree_.SetBranchStatus("genjet_n", 1);
+		tree_.SetBranchStatus("genjet_energy", 1);
+		tree_.SetBranchStatus("genjet_pt", 1);
+		tree_.SetBranchStatus("genjet_eta", 1);
+		tree_.SetBranchStatus("genjet_phi", 1);
+
+		tree_.SetBranchAddress("genjet_n", &genjet_n_);
+		tree_.SetBranchAddress("genjet_energy", &genjet_energy_);
+		tree_.SetBranchAddress("genjet_pt", &genjet_pt_);
+		tree_.SetBranchAddress("genjet_eta", &genjet_eta_);
+		tree_.SetBranchAddress("genjet_phi", &genjet_phi_);
+	}
 
     tree_.SetBranchStatus("tc_n", 1);
     tree_.SetBranchStatus("tc_eta", 1);
@@ -112,6 +133,7 @@ buildEvent()
     panel.detid = panel_id;
     panel.zside = panel_zside_->at(p);
     panel.layer = panel_layer_->at(p);
+    panel.subdet = panel_subdet_->at(p);
     panel.sector = panel_sector_->at(p);
     panel.number = panel_number_->at(p);
     std::vector<TriggerCell> trigger_cells;
@@ -145,7 +167,8 @@ buildSignal(const Event& event, const Geometry& geometry)
   {
     // select only trigger cells which contain sim hits
     // and not in the BH
-    if(tc_simenergy_->at(itc)>0. && tc_subdet_->at(itc)!=5)
+	  //	  if(tc_simenergy_->at(itc)>0. && tc_subdet_->at(itc)!=5)
+	  if(tc_simenergy_->at(itc)>0.)
     {
       if(tc_eta_->at(itc)>0)
       {
@@ -163,6 +186,7 @@ buildSignal(const Event& event, const Geometry& geometry)
         trigger_cells_side_plus.back().first.phi = tc_phi_->at(itc);
         trigger_cells_side_plus.back().first.pt = tc_pt_->at(itc);
         trigger_cells_side_plus.back().first.simenergy = tc_simenergy_->at(itc);
+        trigger_cells_side_plus.back().first.subdet = tc_subdet_->at(itc);
         trigger_cells_side_plus.back().first.module = cell_module;
         trigger_cells_side_plus.back().first.third = cell.third;
         trigger_cells_side_plus.back().first.cell = cell.cell;
@@ -189,6 +213,7 @@ buildSignal(const Event& event, const Geometry& geometry)
         trigger_cells_side_minus.back().first.phi = tc_phi_->at(itc);
         trigger_cells_side_minus.back().first.pt = tc_pt_->at(itc);
         trigger_cells_side_minus.back().first.simenergy = tc_simenergy_->at(itc);
+        trigger_cells_side_minus.back().first.subdet = tc_subdet_->at(itc);
         trigger_cells_side_minus.back().first.module = cell_module;
         trigger_cells_side_minus.back().first.third = cell.third;
         trigger_cells_side_minus.back().first.cell = cell.cell;
@@ -204,38 +229,76 @@ buildSignal(const Event& event, const Geometry& geometry)
   }
   // Associate trigger cells to gen particles
   std::vector<SignalParticle> signal_particles;
-  for(int ig=0; ig<gen_n_; ig++)
-  {
-    // stable particle in the endcaps
-    if(gen_status_->at(ig)==1 && 
-        std::abs(gen_eta_->at(ig))>1.6 &&
-        std::abs(gen_eta_->at(ig))<2.9
-        )
+  if (genType_!="genJet"){
+    for(int ig=0; ig<gen_n_; ig++)
     {
-      SignalParticle particle(
-          event_,
-          ig,
-          gen_id_->at(ig),
-          gen_pt_->at(ig),
-          gen_eta_->at(ig),
-          gen_phi_->at(ig),
-          gen_energy_->at(ig)
-          );
-      if(particle.lorentzVector().Eta()>0)
+      // stable particle in the endcaps
+      if(gen_status_->at(ig)==1 && 
+          std::abs(gen_eta_->at(ig))>1.6 &&
+          std::abs(gen_eta_->at(ig))<2.9
+          )
       {
-        for(const auto& id_p : trigger_cells_side_plus)
+        SignalParticle particle(
+            event_,
+            ig,
+            gen_id_->at(ig),
+            gen_pt_->at(ig),
+            gen_eta_->at(ig),
+            gen_phi_->at(ig),
+            gen_energy_->at(ig)
+            );
+        if(particle.lorentzVector().Eta()>0)
         {
-          particle.addHit(id_p.first);
+          for(const auto& id_p : trigger_cells_side_plus)
+          {
+            particle.addHit(id_p.first);
+          }
         }
+        else
+        {
+          for(const auto& id_p : trigger_cells_side_minus)
+          {
+            particle.addHit(id_p.first);
+          }
+        }
+        signal_particles.emplace_back(particle);
       }
-      else
+    }
+  }
+  else {
+    for(int ig=0; ig<genjet_n_; ig++)
+    {
+      // stable particle in the endcaps
+      if( std::abs(genjet_eta_->at(ig))>1.6 &&
+          std::abs(genjet_eta_->at(ig))<2.9 && 
+		  genjet_pt_->at(ig) > genJetThreshold_
+          )
       {
-        for(const auto& id_p : trigger_cells_side_minus)
+        SignalParticle particle(
+            event_,
+            ig,			
+			0,
+            genjet_pt_->at(ig),
+            genjet_eta_->at(ig),
+            genjet_phi_->at(ig),
+            genjet_energy_->at(ig)
+            );
+        if(particle.lorentzVector().Eta()>0)
         {
-          particle.addHit(id_p.first);
+          for(const auto& id_p : trigger_cells_side_plus)
+          {
+            particle.addHit(id_p.first);
+          }
         }
+        else
+        {
+          for(const auto& id_p : trigger_cells_side_minus)
+          {
+            particle.addHit(id_p.first);
+          }
+        }
+        signal_particles.emplace_back(particle);
       }
-      signal_particles.emplace_back(particle);
     }
   }
   return signal_particles;
